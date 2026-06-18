@@ -1,0 +1,460 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>海外短剧项目个人作品集</title>
+    <style>
+        :root {
+            --bg-color: #0b0b0f;
+            --text-color: #f8fafc;
+            --accent-color: #ff3366; /* 具有短剧网感与爆发力的微红 */
+            --yt-color: #ff0000; /* YouTube 经典红 */
+            --card-bg: rgba(255, 255, 255, 0.02);
+            --border-color: rgba(255, 255, 255, 0.07);
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* 氛围感背景光晕 */
+        .ambient-glow {
+            position: fixed;
+            top: -10%;
+            right: -10%;
+            width: 65vw;
+            height: 65vw;
+            background: radial-gradient(circle, rgba(255, 51, 102, 0.06) 0%, rgba(0,0,0,0) 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+        .ambient-glow-2 {
+            position: fixed;
+            bottom: -20%;
+            left: -10%;
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.04) 0%, rgba(0,0,0,0) 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 80px 24px;
+        }
+
+        /* 头部求职介绍 */
+        header {
+            margin-bottom: 60px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .profile-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent-color);
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #ffffff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .bio {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 750px;
+            margin-bottom: 30px;
+        }
+
+        /* Content Public 社交媒体平台 */
+        .verification-panel {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.02), rgba(255,255,255,0.005));
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 70px;
+            backdrop-filter: blur(10px);
+        }
+
+        .panel-header {
+            margin-bottom: 20px;
+        }
+
+        .panel-header h3 {
+            font-size: 1.2rem;
+            color: #fff;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .panel-header p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+        }
+
+        .links-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .btn-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            color: #fff;
+            text-decoration: none;
+            padding: 14px;
+            border-radius: 10px;
+            font-size: 0.92rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+        }
+
+        .btn-xhs {
+            background: rgba(255, 51, 102, 0.1);
+            border-color: rgba(255, 51, 102, 0.3);
+            color: #ff3366;
+        }
+
+        .btn-xhs:hover {
+            background: var(--accent-color);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        .btn-yt {
+            background: rgba(255, 0, 0, 0.1);
+            border-color: rgba(255, 0, 0, 0.3);
+            color: #ff3333;
+        }
+
+        .btn-yt:hover {
+            background: var(--yt-color);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        /* 作品集区域 */
+        .section-header {
+            margin-bottom: 35px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 6px;
+        }
+
+        .section-subtitle {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 24px;
+        }
+
+        /* 作品卡片链接外层 */
+        .project-link-wrapper {
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .project-link-wrapper:hover .project-card {
+            border-color: rgba(255, 255, 255, 0.25);
+            transform: translateY(-6px);
+            background: rgba(255, 255, 255, 0.04);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .project-content {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            position: relative;
+        }
+
+        /* 右上角外链指示 */
+        .project-content::after {
+            content: '↗';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            opacity: 0.5;
+            transition: opacity 0.2s, transform 0.2s;
+        }
+
+        .project-link-wrapper:hover .project-content::after {
+            opacity: 1;
+            color: var(--accent-color);
+            transform: translate(2px, -2px);
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 14px;
+            padding-right: 20px;
+        }
+
+        .tag {
+            font-size: 0.72rem;
+            background: rgba(255, 255, 255, 0.05);
+            color: #cbd5e1;
+            padding: 3px 8px;
+            border-radius: 4px;
+        }
+
+        .project-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .project-desc {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            flex-grow: 1;
+            text-align: justify;
+        }
+
+        .desc-cn {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed rgba(255, 255, 255, 0.05);
+            color: #94a3b8;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.2rem; }
+            .links-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ambient-glow"></div>
+    <div class="ambient-glow-2"></div>
+
+    <div class="container">
+        <header>
+            <div class="profile-tag">
+                <span>Short Drama Portfolio</span>
+                <span>•</span>
+                <span>Project Matrix</span>
+            </div>
+            <h1>海外短剧项目个人作品集</h1>
+            <p class="bio">基于前公司保密协议要求，本作品集仅作剧目名称及核心梗概矩阵展示。</p>
+        </header>
+
+        <div class="verification-panel">
+            <div class="panel-header">
+                <h3>Content Public 社交媒体平台</h3>
+                <p>遵循合规原则，项目综合大盘动态与视频正片表现可通过以下官方海内外媒体渠道进行核验：</p>
+            </div>
+            <div class="links-grid">
+                <a href="https://xhslink.com/m/4imd6LK2NLd" target="_blank" class="btn-link btn-xhs">
+                    <span>前往官方小红书 (国内宣发) →</span>
+                </a>
+                <a href="https://www.youtube.com/@SodaTV-EN/videos" target="_blank" class="btn-link btn-yt">
+                    <span>前往 YouTube @SodaTV-EN (海外正片) →</span>
+                </a>
+            </div>
+        </div>
+
+        <section>
+            <div class="section-header">
+                <h2 class="section-title">参与项目介绍</h2>
+                <div class="section-subtitle">💡 点击下方任一项目卡片，即可直达 YouTube 官方频道观看对应作品正片/预告。</div>
+            </div>
+            
+            <div class="portfolio-grid">
+                
+                <a href="https://www.youtube.com/watch?v=vU8XF-u_XL0&list=PLwvfwxgN_e2FR9jL6uteoRF2fc0lAiSoq" target="_blank" class="project-link-wrapper">
+                    <div class="project-card">
+                        <div class="project-content">
+                            <div class="project-tags">
+                                <span class="tag">Plus Size</span><span class="tag">Revenge</span><span class="tag">Transformation</span>
+                            </div>
+                            <div class="project-title">1. Revenge of XXL Wife</div>
+                            <div class="project-desc">
+                                <div class="desc-en">Maddy Moss, a 250-pound housewife, transforms into a beauty after her husband Luke dumps her for his mistress Olivia. With the assistance of her childhood friend and surprise love interest Felix, a billionaire, Maddy gets revenge on Luke, Olivia and Luke’s mother.</div>
+                                <div class="desc-cn">【中文梗概】250磅的家庭主妇麦迪·莫斯在丈夫卢克为了情妇奥利维亚抛弃她后，华丽蜕变成一位美女。在儿时好友兼真命天子（亿万富翁菲利克斯）的帮助下，麦迪成功向卢克、奥利维亚以及卢克的母亲展开了复仇。</div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://www.youtube.com/watch?v=VySnJqblcRE" target="_blank" class="project-link-wrapper">
+                    <div class="project-card">
+                        <div class="project-content">
+                            <div class="project-tags">
+                                <span class="tag">Forbidden Love</span><span class="tag">Family Drama</span><span class="tag">Pregnancy</span>
+                            </div>
+                            <div class="project-title">2. Irresistible Love With My Brother-in-law</div>
+                            <div class="project-desc">
+                                <div class="desc-en">Daniel's widow, Amelia, was pregnant when she found solace in the arms of his brother, Anthony, with the help of their mother. Amidst her family drama, Amelia struggled to find her footing, but in the end, she and Anthony bonded over her pregnancy and fell in love with each other.</div>
+                                <div class="desc-cn">【中文梗概】丹尼尔的遗孀阿米莉亚在怀孕时，在母亲的关怀与帮助下，从丹尼尔的哥哥安东尼的怀抱中找到了慰藉。在错综复杂的家庭矛盾中，阿米莉亚努力站稳脚跟，最终，她与安东尼因这个孩子而紧密相连，并深深地爱上了彼此。</div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://www.youtube.com/watch?v=M-L7JE2PdJY&list=PLbEAaUii5yARRXTAcrzp24pK_z_b9lqHF" target="_blank" class="project-link-wrapper">
+                    <div class="project-card">
+                        <div class="project-content">
+                            <div class="project-tags">
+                                <span class="tag">Hidden Identity</span><span class="tag">Secret Prince</span><span class="tag">Romance</span>
+                            </div>
+                            <div class="project-title">3. Married a Gardener, Got a Prince</div>
+                            <div class="project-desc">
+                                <div class="desc-en">In order to take over the family company, a young woman marries a mysterious stranger but she doesn’t know he’s actually a secret prince!</div>
+                                <div class="desc-cn">【中文梗概】为了顺利继承家族公司，一位年轻女子与一个神秘的陌生人闪婚，但她全然不知，这位所谓的“普通人”其实是一位隐瞒身份的帝国王子！</div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://www.youtube.com/watch?v=Q-U2lp-6C8E" target="_blank" class="project-link-wrapper">
+                    <div class="project-card">
+                        <div class="project-content">
+                            <div class="project-tags">
+                                <span class="tag">Political Scandal</span><span class="tag">Undercover</span><span class="tag">Power Couple</span>
+                            </div>
+                            <div class="project-title">4. Campaigning for Love</div>
+                            <div class="project-desc">
+                                <div class="desc-en">After a one-night-stand with a handsome stranger, young campaign intern Sarah realizes that he is her boss — Senate Candidate Christopher. In a difficult campaign, the story of his affair with an intern will be a career-ending scandal, so she takes on a hidden identity. But is he falling for her, or the character she’s playing?</div>
+                                <div class="desc-cn">【中文梗概】在与一位英俊的陌生人发生一夜情后，初出茅庐的竞选实习生萨拉惊觉对方竟然是自己的顶头上司——参议院候选人克里斯托弗。在艰难的竞选节点，高官与实习生的绯闻将对两人的职业生涯带来毁灭性打击，为此她不得不隐藏身份。但他究竟是爱上了真实的她，还是她扮演的那个角色？</div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://www.youtube.com/watch?v=kABG8TnBNTY" target="_blank" class="project-link-wrapper">
+                    <div class="project-card">
+                        <div class="project-content">
+                            <div class="project-tags">
+                                <span class="tag">CEO / Call Boy</span><span class="tag">Billionaire</span><span class="tag">Scheming Rival</span>
+                            </div>
+                            <div class="project-title">5. The Double Life of Mr. President</div>
+                            <div class="project-desc">
+                                <div class="desc-en">Claire wants to have a baby to give her ailing grandmother something to live for. When Claire’s cheating husband leaves her, she hires a call boy. She doesn’t know the call boy is actually billionaire Dominic Bridges who is in love with her. But her scheming rival, Gina, will do anything to keep them apart.</div>
+                                <div class="desc-cn">【中文梗概】克莱尔渴望生个孩子，以此给病重的祖母留下活下去的精神寄托。在出轨的丈夫抛弃她后，她雇佣了一名“男伴”借腹生子。她并不知道，这位男伴其实是深爱着她、为了得到她不惜一切代价的亿万富翁多米尼克。然而，诡计多端的竞争对手吉娜，正千方百计地想要拆散他们。</div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://www.youtube.com/watch?v=vBEIGjI9C_w" target="_blank" class="project-link-wrapper">
+                    <div class="project-card">
+                        <div class="project-content">
+                            <div class="project-tags">
+                                <span class="tag">Undercover Heiress</span><span class="tag">Flight Attendant</span><span class="tag">Growth & Revenge</span>
+                            </div>
+                            <div class="project-title">6. Heiress Hidden in the Clouds</div>
+                            <div class="project-desc">
+                                <div class="desc-en">A wealthy heiress goes undercover as a flight attendant in the U.S. to understand customer service, but faces identity theft and sabotage—leading to a journey of growth, revenge, and unexpected romance.</div>
+                                <div class="desc-cn">【中文梗概】身价不菲的豪门女继承人隐瞒身份，前往美国基层担任一名普通空姐以了解客户服务。期间她遭遇了身份盗用与恶意陷害，从而开启了一段集个人成长、逆袭复仇与不期而遇的浪漫爱情于一体的精彩旅程。</div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://www.youtube.com/watch?v=tUTQlEjCuAg&list=PLd3mFCVC6Z15-QasfgDaCyjrnvRJjhvFi" target="_blank" class="project-link-wrapper">
+                    <div class="project-card">
+                        <div class="project-content">
+                            <div class="project-tags">
+                                <span class="tag">Contract Marriage</span><span class="tag">Fake Boyfriend</span><span class="tag">Hotel Heir</span>
+                            </div>
+                            <div class="project-title">7. Husband for Hire</div>
+                            <div class="project-desc">
+                                <div class="desc-en">Lizzie hires Jack to pretend to be her fake boyfriend at her ex-fiance and step-sister’s engagement party. Little does Lizzie know Jack’s not an out-of-work actor but the grandson of a billionaire hotel owner who needs to get a girl to love him for him to secure his business.</div>
+                                <div class="desc-cn">【中文梗概】莉齐雇佣了杰克（她误以为对方只是个服务生）在傲慢的前未婚夫和继姐的订婚宴上假扮自己的男友。但莉齐不知道，杰克根本不是什么失业演员，而是顶级连锁酒店帝国亿万富翁的孙子，为了继承家族产业，他必须找到一个不贪图他家产、真正爱他本身的女孩。</div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://www.youtube.com/shorts/mkop-4YjFPo" target="_blank" class="project-link-wrapper">
+                    <div class="project-card">
+                        <div class="project-content">
+                            <div class="project-tags">
+                                <span class="tag">Plus Size</span><span class="tag">Transformation</span><span class="tag">School Revenge</span>
+                            </div>
+                            <div class="project-title">8. The MVP's Plus Size Love</div>
+                            <div class="project-desc">
+                                <div class="desc-en">In a tale of transformation and revenge, bullied high schooler Alexandra reinvents herself as "Lexi" with the help of childhood friend Dan, returning to expose her tormentors, reclaim her dignity, and find true love.</div>
+                                <div class="desc-cn">【中文梗概】这是一个关于华丽蜕变与逆袭复仇的故事：曾饱受校园霸凌的高中生亚历山德拉，在儿时好友丹的帮助下脱胎换骨，以全新身份“莱克西”重返校园。她撕下了霸凌者的伪善面具，赢回了应有的尊严，并收获了真挚的爱情。</div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+        </section>
+    </div>
+
+</body>
+</html>
+
+```
